@@ -10,6 +10,10 @@ variable "location" {
   type        = string
 }
 
-variable "storage_account_name"{
+variable "storage_account_name" {
+  type = string
+}
+
+variable "key_vault_name" {
   type = string
 }
