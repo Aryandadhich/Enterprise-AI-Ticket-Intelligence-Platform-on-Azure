@@ -17,3 +17,10 @@ variable "storage_account_name" {
 variable "key_vault_name" {
   type = string
 }
+
+variable "openai_account_name" {
+  type = string
+}
+
+##if we didnt diclare this in varibale then terraform throw a eror because the root module is trying to use 
+# a variable it doesn't know about
