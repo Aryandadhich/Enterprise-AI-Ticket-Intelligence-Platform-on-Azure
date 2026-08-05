@@ -19,9 +19,9 @@ module "key_vault" {
 }
 
 module "Azure_openai" {
-  source = "./modules/Azure_openai"
+  source              = "./modules/Azure_openai"
   resource_group_name = module.resource_group.resource_group_name
   openai_account_name = var.openai_account_name
-   location            = var.location
+  location = var.openai_location
 }
 
