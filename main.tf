@@ -22,6 +22,21 @@ module "Azure_openai" {
   source              = "./modules/Azure_openai"
   resource_group_name = module.resource_group.resource_group_name
   openai_account_name = var.openai_account_name
-  location = var.openai_location
+  location            = var.openai_location
+}
+
+module "log_analytics_workspace" {
+  source              = "./modules/log_analytics_workspace"
+  workspace_name      = var.workspace_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+}
+
+module "application_insights" {
+  source                    = "./modules/application_insights"
+  application_insights_name = var.application_insights_name
+  resource_group_name       = module.resource_group.resource_group_name
+  location                  = var.location
+  workspace_id              = module.log_analytics_workspace.workspace_id
 }
 

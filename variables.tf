@@ -25,5 +25,16 @@ variable "openai_account_name" {
 variable "openai_location" {
   type = string
 }
-##if we didnt diclare this in varibale then terraform throw a eror because the root module is trying to use 
-# a variable it doesn't know about
+
+variable "workspace_name" {
+  description = "Name of the Log Analytics Workspace"
+  type        = string
+}
+
+variable "application_insights_name" {
+  description = "Name of the Application Insights instance"
+  type        = string
+}
+
+# If a variable is not declared here, Terraform will throw an error because
+# the root module won't know about it.

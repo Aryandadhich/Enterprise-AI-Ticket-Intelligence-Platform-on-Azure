@@ -11,3 +11,7 @@ storage_account_name = "aiticketstorage12"
 key_vault_name = "kv-aiticket12"
 
 openai_account_name = "aoai-arya001"
+
+workspace_name            = "law-aiticket-dev"
+
+application_insights_name = "appi-aiticket-dev"
