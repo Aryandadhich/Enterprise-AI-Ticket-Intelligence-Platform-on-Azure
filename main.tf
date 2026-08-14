@@ -40,3 +40,10 @@ module "application_insights" {
   workspace_id              = module.log_analytics_workspace.workspace_id
 }
 
+module "ai_search" {
+  source              = "./modules/ai_search"
+  search_service_name = var.search_service_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+}
+

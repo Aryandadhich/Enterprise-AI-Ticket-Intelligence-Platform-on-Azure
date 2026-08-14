@@ -36,5 +36,10 @@ variable "application_insights_name" {
   type        = string
 }
 
+variable "search_service_name" {
+  description = "Name of the Azure AI Search service"
+  type        = string
+}
+
 # If a variable is not declared here, Terraform will throw an error because
 # the root module won't know about it.

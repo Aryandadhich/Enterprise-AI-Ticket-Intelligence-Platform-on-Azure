@@ -21,3 +21,8 @@ output "log_analytics_workspace_name" {
 output "application_insights_name" {
   value = module.application_insights.application_insights_name
 }
+
+output "search_service_name" {
+  value = module.ai_search.search_service_name
+}
+
