@@ -16,5 +16,7 @@ variable "location" {
 variable "sku" {
   description = "The SKU of the Azure AI Search service (e.g. free, basic, standard)."
   type        = string
-  default     = "basic"
+  # "basic" does NOT support vector search (HNSW indexes).
+  # "standard" is the minimum SKU required for vector/semantic RAG retrieval.
+  default     = "standard"
 }

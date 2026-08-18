@@ -9,6 +9,11 @@ module "storage_account" {
   storage_account_name = var.storage_account_name
   resource_group_name  = module.resource_group.resource_group_name
   location             = var.location
+  # Pass the AI Search managed identity's principal_id into the storage module.
+  # This wires up the RBAC role assignment: Search → Storage Blob Data Reader.
+  # Terraform will automatically create AI Search first (to get this value) before
+  # creating the role assignment inside the storage module.
+  search_principal_id  = module.ai_search.search_principal_id
 }
 
 module "key_vault" {
