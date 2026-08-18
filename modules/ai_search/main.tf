@@ -4,8 +4,8 @@ resource "azurerm_search_service" "this" {
   location            = var.location
   sku                 = var.sku
 
-  # A SystemAssigned identity gives this Search service its own Azure AD identity.
-  # This is how the Search Indexer will authenticate to Blob Storage — no secrets, no keys.
+  # SystemAssigned identity gives this Search service its own Azure AD identity.
+  # The Search Indexer uses this identity to authenticate to Blob Storage — no secrets needed.
   identity {
     type = "SystemAssigned"
   }

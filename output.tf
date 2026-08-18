@@ -26,3 +26,7 @@ output "search_service_name" {
   value = module.ai_search.search_service_name
 }
 
+output "documents_container_name" {
+  value = module.storage_account.documents_container_name
+}
+
