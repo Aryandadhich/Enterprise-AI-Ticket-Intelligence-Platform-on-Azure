@@ -1,0 +1,7 @@
+# Python dependencies for the ingestion pipeline
+#
+# azure-identity   — DefaultAzureCredential (supports OIDC, az login, managed identity)
+# azure-storage-blob — BlobServiceClient for uploading to Azure Blob Storage
+
+azure-identity==1.19.0
+azure-storage-blob==12.24.0
