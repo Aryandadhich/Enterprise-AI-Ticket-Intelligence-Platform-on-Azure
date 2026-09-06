@@ -1,16 +1,22 @@
 # Enterprise AI Ticket Intelligence Platform
 
+## Azure Account
+- **Account:** `santoshdadhich84@gmail.com` (Azure for Students / Free Trial)
+- **Subscription ID:** `7d8e5aef-155c-408d-b300-ef7e2b2dfaa2`
+- **Tenant ID:** `752909f2-c8de-4b2d-ac63-1a22ac3891cd`
+- **Migrated from:** IBM account (`Aryan.Dadheech@ibm.com`) — old state backed up as `terraform.tfstate.old-ibm`
+
 ## Project Goal
 Build a production-grade AI-powered enterprise ticket intelligence platform on Azure.
 
 ## Infrastructure Completed
 - [x] Resource Group
-- [x] Storage Account (with `documents` blob container)
-- [x] Key Vault
+- [x] Storage Account (`aiticketstorage99`) with `documents` blob container
+- [x] Key Vault (`kv-aiticket99`)
 - [x] Azure OpenAI resource
 - [x] Application Insights
 - [x] Log Analytics Workspace
-- [x] Azure AI Search (Standard SKU, SystemAssigned identity, RBAC on Storage)
+- [x] Azure AI Search (`aisearch-aiticket-v2`, Standard SKU, SystemAssigned identity, RBAC on Storage)
 
 ## AI Foundry + Model Deployment Completed
 - [x] Azure AI Foundry project created (connected to Azure OpenAI resource)
