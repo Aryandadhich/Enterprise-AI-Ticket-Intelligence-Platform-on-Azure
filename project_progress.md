@@ -31,15 +31,16 @@ Build a production-grade AI-powered enterprise ticket intelligence platform on A
 - [x] `scripts/requirements.txt`
 
 ## Pending One-Time Azure Setup
-- [ ] Create App Registration with Federated Credential (OIDC) for GitHub Actions
-- [ ] Add GitHub Variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID
-- [ ] Add GitHub Secret: AZURE_STORAGE_ACCOUNT
+- [x] Create App Registration with Federated Credential (OIDC) for GitHub Actions
+- [x] Add GitHub Variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID
+- [x] Add GitHub Secret: AZURE_STORAGE_ACCOUNT
+- [x] GitHub Actions pipeline ran successfully (Ingest Knowledge Documents #1 — Sep 7, 27s, green ✅)
+- [x] Knowledge documents uploaded to Azure Blob Storage via OIDC — confirmed working
 
 ## Current Phase
-GitHub ↔ Azure OIDC connection + AI Search RAG configuration
+AI Search RAG configuration (datasource → index → indexer)
 
 ## Next Steps
-- [ ] Build GitHub ↔ Azure OIDC connection and test pipeline end-to-end
 - [ ] Configure AI Search datasource → index → indexer (pointing at blob container)
 - [ ] RAG integration — connect AI Search + Azure OpenAI inside Foundry
 - [ ] Build ticket ingestion API
