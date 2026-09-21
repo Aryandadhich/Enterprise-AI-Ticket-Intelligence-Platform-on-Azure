@@ -70,7 +70,6 @@ def get_token() -> str:
     token = credential.get_token(SEARCH_SCOPE)
     return token.token
 
-
 def search_request(method: str, path: str, token: str, body: dict | None = None) -> dict:
     """
     Send a REST request to the AI Search management API.

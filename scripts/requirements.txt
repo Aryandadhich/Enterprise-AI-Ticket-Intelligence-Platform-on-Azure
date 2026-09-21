@@ -1,7 +1,9 @@
-# Python dependencies for the ingestion pipeline
+# Python dependencies for the Enterprise AI Ticket Intelligence Platform
 #
-# azure-identity   — DefaultAzureCredential (supports OIDC, az login, managed identity)
-# azure-storage-blob — BlobServiceClient for uploading to Azure Blob Storage
+# azure-identity      — DefaultAzureCredential (supports OIDC, az login, managed identity)
+# azure-storage-blob  — BlobServiceClient for uploading to Azure Blob Storage
+# requests            — HTTP client used by setup_ai_search.py to call AI Search REST API
 
 azure-identity==1.19.0
 azure-storage-blob==12.24.0
+requests==2.32.3

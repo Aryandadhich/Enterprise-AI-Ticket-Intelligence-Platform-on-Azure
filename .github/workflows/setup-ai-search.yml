@@ -1,0 +1,105 @@
+# ============================================================
+# setup-ai-search.yml
+# ============================================================
+# Configures Azure AI Search for RAG by running setup_ai_search.py
+# which creates three resources inside the AI Search service:
+#
+#   1. Datasource  — points AI Search at the blob 'documents' container
+#   2. Index       — defines the searchable schema (knowledge-index)
+#   3. Indexer     — crawls blobs and populates the index (every 5 min)
+#
+# When does this run?
+#   - Manually from GitHub Actions UI (workflow_dispatch)
+#     → Use this when setting up for the first time or after schema changes
+#
+# Why not auto-trigger on push?
+#   This is a one-time infrastructure setup, not a data pipeline.
+#   Re-running it is safe (idempotent — PUT, not POST) but there is no
+#   reason to run it on every commit. Manual trigger keeps it intentional.
+#
+# Authentication: GitHub Actions OIDC (same as ingest-knowledge.yml)
+#   NO Azure secrets stored. GitHub mints a short-lived token at runtime.
+#
+# GitHub Secrets required (Settings → Secrets → Actions):
+#   AZURE_CLIENT_ID        - App registration client ID
+#   AZURE_TENANT_ID        - Azure AD tenant ID
+#   AZURE_SUBSCRIPTION_ID  - Azure subscription ID
+#   AZURE_STORAGE_ACCOUNT  - Storage account name  (aiticketstorage99)
+#   AZURE_SEARCH_SERVICE   - AI Search service name (aisearch-aiticket-v2)
+#   AZURE_RESOURCE_GROUP   - Resource group name    (rg-ai-ticket-dev)
+# ============================================================
+
+name: Setup AI Search (RAG Pipeline)
+
+on:
+  # Manual trigger only — run this intentionally from GitHub Actions UI
+  workflow_dispatch:
+
+# Required for OIDC token request
+permissions:
+  id-token: write   # allows GitHub to request an OIDC JWT token
+  contents: read    # allows checkout
+
+jobs:
+  setup:
+    name: Configure AI Search datasource, index, and indexer
+    runs-on: ubuntu-latest
+
+    steps:
+      # --------------------------------------------------------
+      # 1. Check out the repository
+      # --------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --------------------------------------------------------
+      # 2. Authenticate to Azure using OIDC (no secret stored)
+      #    Same mechanism used by ingest-knowledge.yml.
+      #    azure/login exchanges the GitHub OIDC token for an
+      #    Azure access token valid for ~10 minutes only.
+      # --------------------------------------------------------
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # --------------------------------------------------------
+      # 3. Set up Python
+      # --------------------------------------------------------
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # --------------------------------------------------------
+      # 4. Install Python dependencies
+      #    requests + azure-identity are both needed here
+      # --------------------------------------------------------
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      # --------------------------------------------------------
+      # 5. Run the AI Search setup script
+      #
+      #    What this does:
+      #      - Creates datasource  → blob-documents
+      #      - Creates index       → knowledge-index
+      #      - Creates indexer     → blob-indexer (schedule: PT5M)
+      #      - Triggers immediate indexer run
+      #
+      #    All operations are idempotent (PUT) — safe to re-run.
+      #
+      #    AZURE_CLIENT_ID + AZURE_TENANT_ID tell DefaultAzureCredential
+      #    which identity to use for the AI Search bearer token.
+      # --------------------------------------------------------
+      - name: Setup AI Search (datasource + index + indexer)
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
+          AZURE_SEARCH_SERVICE: ${{ secrets.AZURE_SEARCH_SERVICE }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+        run: python scripts/setup_ai_search.py
