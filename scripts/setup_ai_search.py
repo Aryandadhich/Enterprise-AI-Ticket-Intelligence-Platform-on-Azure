@@ -211,8 +211,8 @@ def create_index(token: str) -> None:
                 {
                     "name": "semantic-config",
                     "prioritizedFields": {
-                        "contentFields": [{"fieldName": "content"}],
-                        "keywordsFields": [{"fieldName": "metadata_storage_name"}],
+                        "prioritizedContentFields": [{"fieldName": "content"}],
+                        "prioritizedKeywordsFields": [{"fieldName": "metadata_storage_name"}],
                     },
                 }
             ]
