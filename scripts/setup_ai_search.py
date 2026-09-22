@@ -205,18 +205,6 @@ def create_index(token: str) -> None:
                 "retrievable": True,
             },
         ],
-        # Semantic search configuration — enables re-ranking + extractive answers
-        "semantic": {
-            "configurations": [
-                {
-                    "name": "semantic-config",
-                    "prioritizedFields": {
-                        "prioritizedContentFields": [{"fieldName": "content"}],
-                        "prioritizedKeywordsFields": [{"fieldName": "metadata_storage_name"}],
-                    },
-                }
-            ]
-        },
     }
 
     search_request("PUT", f"/indexes/{INDEX_NAME}", token, body)
