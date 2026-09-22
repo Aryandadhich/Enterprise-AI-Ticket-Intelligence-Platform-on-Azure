@@ -96,7 +96,7 @@ def upload_documents(client: BlobServiceClient) -> tuple[int, int]:
                 container_client.upload_blob(
                     name=blob_name,
                     data=data,
-                    overwrite=True,  # idempotent — safe to re-run anytime
+                    overwrite=True,  # idempotent — safe to re-run anytime run script 10 times wont create duplicates
                     content_settings=None,
                 )
             print(f"  [OK] Uploaded: {blob_name}")
