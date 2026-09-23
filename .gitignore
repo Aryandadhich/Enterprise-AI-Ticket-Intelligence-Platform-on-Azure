@@ -4,3 +4,7 @@
 .terraform.lock.hcl
 
 .vscode/
+# Local environment variables — NEVER commit these
+.env
+app/.env
+*.env
