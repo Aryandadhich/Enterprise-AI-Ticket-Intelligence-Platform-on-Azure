@@ -1,1 +1,13 @@
-# Block 1 — coming soon
+# Python dependencies for the RAG API
+#
+# fastapi        — web framework for building the API endpoints
+# uvicorn        — ASGI server to run the FastAPI app locally
+# openai         — Azure OpenAI SDK to call GPT-4o
+# python-dotenv  — reads .env file for local development
+# pydantic       — data validation (comes with fastapi, pinned for safety)
+
+fastapi==0.115.0
+uvicorn==0.30.6
+openai==1.51.0
+python-dotenv==1.0.1
+pydantic==2.9.2
