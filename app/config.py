@@ -42,6 +42,14 @@ GPT_DEPLOYMENT_NAME = "gpt-4o"
 AZURE_OPENAI_API_VERSION = "2024-02-01"
 
 # ---------------------------------------------------------------------------
+# Mock mode — set to True to skip real GPT calls (local testing without Azure)
+# ---------------------------------------------------------------------------
+
+# When True: ask_gpt() returns a fake response — no Azure credits needed
+# When False: ask_gpt() calls real Azure OpenAI GPT-4o
+MOCK_MODE = os.environ.get("MOCK_MODE", "true").lower() == "true"
+
+# ---------------------------------------------------------------------------
 # Knowledge base settings
 # ---------------------------------------------------------------------------
 

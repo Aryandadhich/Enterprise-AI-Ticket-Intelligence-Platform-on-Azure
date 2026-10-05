@@ -23,6 +23,7 @@ from app.config import (
     AZURE_OPENAI_API_VERSION,
     GPT_DEPLOYMENT_NAME,
     KNOWLEDGE_DIR,
+    MOCK_MODE,
 )
 
 
@@ -155,22 +156,37 @@ Relevant knowledge base documents:
 
 Please analyze this ticket and provide a solution based on the above documents."""
 
-    # Initialize Azure OpenAI client
+    # MOCK MODE — return fake response without calling Azure
+    # Used for local testing when Azure credits are not available
+    # To disable: set MOCK_MODE=false in app/.env
+    if MOCK_MODE:
+        source_list = ", ".join(relevant_docs.keys())
+        return (
+            f"[MOCK RESPONSE — Real GPT-4o answer will appear here when Azure is connected]\n\n"
+            f"Based on the knowledge documents ({source_list}), here is the analysis:\n\n"
+            f"The ticket describes: '{ticket[:100]}'\n\n"
+            f"Recommended actions:\n"
+            f"1. Check the relevant runbook documents listed in 'sources'\n"
+            f"2. Follow the step-by-step resolution guide\n"
+            f"3. Escalate to L2 support if issue persists\n\n"
+            f"[To enable real AI answers: set MOCK_MODE=false in app/.env and add valid AZURE_OPENAI_KEY]"
+        )
+
+    # REAL MODE — call Azure OpenAI GPT-4o
     client = AzureOpenAI(
         azure_endpoint=AZURE_OPENAI_ENDPOINT,
         api_key=AZURE_OPENAI_KEY,
         api_version=AZURE_OPENAI_API_VERSION,
     )
 
-    # Call GPT-4o
     response = client.chat.completions.create(
         model=GPT_DEPLOYMENT_NAME,
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user",   "content": user_prompt},
         ],
-        temperature=0.3,    # low = more focused, consistent answers
-        max_tokens=800,     # enough for a detailed answer
+        temperature=0.3,
+        max_tokens=800,
     )
 
     return response.choices[0].message.content
