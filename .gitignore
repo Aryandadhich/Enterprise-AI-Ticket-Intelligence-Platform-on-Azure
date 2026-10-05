@@ -8,3 +8,8 @@
 .env
 app/.env
 *.env
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
